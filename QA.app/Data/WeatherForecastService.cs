@@ -1,4 +1,4 @@
-namespace QA.App.Data;
+namespace QA.app.Data;
 
 public class WeatherForecastService
 {
