@@ -6,4 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Havit.Blazor.Components.Web.Bootstrap" Version="2.1.2" />
+  </ItemGroup>
+
 </Project>

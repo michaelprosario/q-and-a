@@ -1,13 +1,15 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using QA.app.Data;
+using Havit.Blazor.Components.Web;            
+using Havit.Blazor.Components.Web.Bootstrap;  
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
+builder.Services.AddHxServices(); 
 
 var app = builder.Build();
 
