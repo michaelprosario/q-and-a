@@ -37,6 +37,7 @@ namespace QA.Core.Services
         {
             Require.ObjectNotNull(query, "query is required");
             GetQuestionsResponse response = new GetQuestionsResponse();
+            
             return response;
         }
     }
