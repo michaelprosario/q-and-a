@@ -14,4 +14,9 @@
     <Folder Include="Data\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\QA.Core\QA.Core.csproj" />
+    <ProjectReference Include="..\QA.Infra\QA.Infra.csproj" />
+  </ItemGroup>
+
 </Project>
