@@ -1,12 +1,21 @@
-using DocumentStore.Core.Responses;
+using DocumentStore.Core.Enums;
+using DocumentStore.Core.Interfaces;
 using DocumentStore.Core.Requests;
-using System.Runtime.Serialization;
-using System.Collections.Generic;
+using DocumentStore.Core.Responses;
 using QA.Core.Entities;
 using QA.Core.Helpers;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
+using System.Threading.Tasks;
 
 namespace QA.Core.Services
 {
+
+    public interface IQAQueryRepository
+    {
+        GetQuestionsResponse GetQuestions(GetQuestionsQuery query);
+        List<QuestionAnswer> GetAnswersForQuestion(string questionId);
+    }
 
     [DataContract]
     public class GetQuestionsQuery : Request
@@ -18,7 +27,8 @@ namespace QA.Core.Services
     [DataContract]
     public class GetQuestionsResponse : AppResponse
     {
-        public List<Question> Questions;
+        [DataMember]
+        public List<Question> Questions { get; set; }     
 
         public GetQuestionsResponse()
         {
@@ -26,11 +36,30 @@ namespace QA.Core.Services
         }
     }
 
+    [DataContract]
+    public class GetQuestionAndAnswersResponse : AppResponse
+    {
+        [DataMember]
+        public List<QuestionAnswer> Answers { get; set; }
+        [DataMember]
+        public Question Question{ get; set; }
+
+        public GetQuestionAndAnswersResponse()
+        {
+            Answers = new List<QuestionAnswer>();
+        }
+    }    
+
     public class QAQueryService {
 
-        public QAQueryService()
+        IQAQueryRepository _qaQueryRepository;
+        IRepository<Question> _questionsRepo;
+        public QAQueryService(IQAQueryRepository qaQueryRepository, IRepository<Question> questionsRepo)
         {
-
+            Require.ObjectNotNull(qaQueryRepository, "qaQueryRepository is required");
+            Require.ObjectNotNull(questionsRepo, "questionsRepo is required");
+            _qaQueryRepository = qaQueryRepository;
+            _questionsRepo = questionsRepo;
         }
 
         public GetQuestionsResponse GetQuestions(GetQuestionsQuery query)
@@ -38,7 +67,34 @@ namespace QA.Core.Services
             Require.ObjectNotNull(query, "query is required");
             GetQuestionsResponse response = new GetQuestionsResponse();
             
-            return response;
+            return _qaQueryRepository.GetQuestions(query);
         }
+
+        public async Task<GetQuestionAndAnswersResponse> GetQuestionAndAnswers(GetDocumentQuery query)
+        {
+            Require.ObjectNotNull(query, "query is required");
+            GetQuestionAndAnswersResponse response = new GetQuestionAndAnswersResponse();
+            
+            var question = await _questionsRepo.GetById(query.Id);
+            if(question == null)
+            {
+                response.Code = ResponseCode.NotFound;
+                response.Message = "_questionsRepo - question not found";
+                return response;
+            }
+
+            List<QuestionAnswer> answers = _qaQueryRepository.GetAnswersForQuestion(query.Id);
+            if(answers == null)
+            {
+                response.Message = "_qaQueryRepository.GetAnswersForQuestion returned null";
+                return response;
+            }
+            
+            response.Question = question;
+            response.Answers = answers;
+            
+            return response;
+            
+        }        
     }
 }
