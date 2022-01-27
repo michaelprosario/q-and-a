@@ -1,11 +1,12 @@
 using DocumentStore.Core.Interfaces;
+using DocumentStore.Entities;
 using System;
 using System.Runtime.Serialization;
 
 namespace QA.Core.Entities
 {
     [DataContract]
-    public class EntityVote : IEntity
+    public class EntityVote : BaseEntity, IEntity
     {                        
         [DataMember] public DateTime CreatedAt { get; set; }
         [DataMember] public string CreatedBy { get; set; }
