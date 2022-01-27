@@ -5,12 +5,12 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Components;
-using SmartReader.Core;
-using SmartReader.Core.Entities;
-using SmartReader.Core.Requests;
-using SmartReader.Core.Services;
+using QA.Core;
+using QA.Core.Entities;
+using QA.Core.Requests;
+using QA.Core.Services;
 
-namespace SmartReader.Blazor.Pages.EditContentSource
+namespace QA.Blazor.Pages.EditContentSource
 {
     public partial class EditContentSource : ComponentBase
     {
