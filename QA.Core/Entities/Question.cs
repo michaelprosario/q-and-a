@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 namespace QA.Core.Entities
 {
     [DataContract]
-    public class Question : Post, IEntity
+    public class Question : Post
     {
         [DataMember]
         public int Votes { get; set; }
