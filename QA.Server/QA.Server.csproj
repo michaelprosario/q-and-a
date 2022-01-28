@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Havit.Blazor.Components.Web.Bootstrap" Version="2.1.2" />
+    <PackageReference Include="PSC.Blazor.Components.MarkdownEditor" Version="2.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.1" />    
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.1" />    
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.1" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.3" />
+  </ItemGroup>  
+
+  <ItemGroup>
+    <ProjectReference Include="..\QA.Core\QA.Core.csproj" />
+    <ProjectReference Include="..\QA.Infra\QA.Infra.csproj" />
+  </ItemGroup>
+
+</Project>
