@@ -37,7 +37,8 @@ namespace QA.Server
 
             Record.CreatedBy = "system";
             Record.PermaLink = Record.Name;
-            Record.Abstract = Record.Content;
+            Record.Abstract = markdownHtml;
+            Record.HtmlContent = markdownHtml;
 
             var questionValidator = new QuestionValidator();
             var validationResults = questionValidator.Validate(this.Record);
@@ -46,7 +47,6 @@ namespace QA.Server
                 ValidationFailures = validationResults.Errors;
                 return;
             }
-
 
             var command = new StoreDocumentCommand<Question>
             {
@@ -60,8 +60,7 @@ namespace QA.Server
             }
             else
             {
-                // todo - redirect to view question ...
-                NavigationManager.NavigateTo($"view-question/{Record.Id}");
+                NavigationManager.NavigateTo($"view-question/{Record.Id}", true);
             }
         }
 
@@ -85,6 +84,5 @@ namespace QA.Server
         {
             await OnSave();
         }
-
     }
 }

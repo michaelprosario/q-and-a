@@ -12,14 +12,10 @@
                 ValueHTMLChanged="@OnMarkdownValueHTMLChanged" />
 
 <h3>Tags</h3>
-<HxInputText @bind-Value="@Record.Name" Placeholder="Enter tags" />
+<HxInputText @bind-Value="@Record.Tags" Placeholder="Enter tags" />
 <br>
 <br>
-@if (ValidationFailures.Count == 0)
-{
-    
-}
-else
+@if (ValidationFailures.Count > 0)
 {
     <ul>
         @foreach (var validationFailure in ValidationFailures)

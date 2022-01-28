@@ -157,7 +157,7 @@ namespace DocumentStore.Core.Services
                     return response;
                 }
 
-                record.DeletedAt = DateTime.Now;
+                record.DeletedAt = DateTime.UtcNow;
                 record.DeletedBy = command.UserId;
                 record.IsDeleted = true;
                 await _repository.Update(record);
@@ -168,7 +168,7 @@ namespace DocumentStore.Core.Services
             public IEntity PopulateNewDocumentFields(IEntity document, string userId)
             {
                 Require.ObjectNotNull(document, "document is required");
-                document.CreatedAt = DateTime.Now;
+                document.CreatedAt = DateTime.UtcNow;
                 document.CreatedBy = userId;
                 if (string.IsNullOrEmpty(document.Id)) document.Id = Guid.NewGuid().ToString();
 
@@ -177,7 +177,7 @@ namespace DocumentStore.Core.Services
 
             private void PopulateDocumentForUpdate(IEntity document, string userId)
             {
-                document.UpdatedAt = DateTime.Now;
+                document.UpdatedAt = DateTime.UtcNow;
                 document.UpdatedBy = userId;
             }
 
