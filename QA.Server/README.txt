@@ -2,6 +2,9 @@
 DB migration
 ============
 
+Install EF tools if needed ...
+dotnet tool install --global dotnet-ef
+
 Early stage iteration
 - Navigate to Infra project
 - Delete migrations
@@ -12,6 +15,7 @@ dotnet ef migrations add setup1 --project ..\QA.Infra --context QAContext
 
 Mac/linux
 dotnet ef migrations add setup1 --project ../QA.Infra --context QAContext
+
 dotnet ef database update
 dotnet ef migrations script --output setup_db.sql
 
