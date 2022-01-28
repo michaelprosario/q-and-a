@@ -50,7 +50,12 @@ namespace QA.Core.Services
         }
     }    
 
-    public class QAQueryService {
+    public interface IQAQueryService {
+        GetQuestionsResponse GetQuestions(GetQuestionsQuery query);
+        Task<GetQuestionAndAnswersResponse> GetQuestionAndAnswers(GetDocumentQuery query);
+    }
+
+    public class QAQueryService : IQAQueryService {
 
         IQAQueryRepository _qaQueryRepository;
         IRepository<Question> _questionsRepo;
