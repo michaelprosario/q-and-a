@@ -3,6 +3,7 @@ using DocumentStore.Core.Services.DocumentStore.Core.Services;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Components;
 using QA.Core.Entities;
+using QA.Core.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,16 +11,13 @@ using System.Threading.Tasks;
 
 namespace QA.Server
 {
-    public partial class EditQuestionComponentBase : ComponentBase
+    public partial class AddQuestionComponentBase : ComponentBase
     {
+        private string markdownHtml = "";
         public Question Record;
-
         public IList<ValidationFailure> ValidationFailures = new List<ValidationFailure>();
-
         [Inject] private IDocumentsService<Question> DocumentsService { get; set; }
         [Inject] NavigationManager NavigationManager { get; set; }
-
-        [Parameter] public string Id { get; set; }
 
         public string FormMessage { get; set; } = "";
         
@@ -30,15 +28,26 @@ namespace QA.Server
             {
                 Id = Guid.NewGuid().ToString()
             };
-
-            Id = Record.Id;
-
             FormMessage = "Create Question";
         }
 
         private async Task OnSave()
         {
             ValidationFailures = new List<ValidationFailure>();
+
+            Record.CreatedBy = "system";
+            Record.PermaLink = Record.Name;
+            Record.Abstract = Record.Content;
+
+            var questionValidator = new QuestionValidator();
+            var validationResults = questionValidator.Validate(this.Record);
+            if(validationResults.Errors.Count() > 0)
+            {
+                ValidationFailures = validationResults.Errors;
+                return;
+            }
+
+
             var command = new StoreDocumentCommand<Question>
             {
                 Document = Record,
@@ -54,9 +63,14 @@ namespace QA.Server
                 // todo - redirect to view question ...
                 NavigationManager.NavigateTo($"view-question/{Record.Id}");
             }
-            
         }
 
+        protected Task OnMarkdownValueHTMLChanged(string value)
+        {
+            markdownHtml = value;
+            return Task.CompletedTask;
+        }
+        
         private void OnSaveAndClose()
         {
             NavigationManager.NavigateTo($"view-question/{Record.Id}");
@@ -64,30 +78,13 @@ namespace QA.Server
 
         protected override async Task OnInitializedAsync()
         {
-            await LoadRecord();
+            OnNewRecord();
         }
 
-        private async Task LoadRecord()
+        protected async Task OnSaveQuestion()
         {
-            if (Id == "new")
-            {
-                OnNewRecord();
-            }
-            else
-            {
-                var query = new GetDocumentQuery
-                {
-                    Id = Id,
-                    UserId = "system"
-                };
+            await OnSave();
+        }
 
-                var response = await DocumentsService.GetDocument(query);
-
-                if (response == null || !response.Ok()) throw new ApplicationException("response is null");
-
-                Record = response.Document;
-                FormMessage = Record.UpdatedAt == null ? $"Created at {Record.CreatedAt} " : $"Last updated {Record.UpdatedAt} ";                
-            }
-        }        
     }
 }

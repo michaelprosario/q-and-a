@@ -6,7 +6,6 @@ namespace QA.Core.Validators {
         public QuestionValidator () {
             RuleFor (x => x.Name).NotEmpty ();
             RuleFor (x => x.Content).NotEmpty ();
-            RuleFor (x => x.Tags).NotEmpty ();
             RuleFor (x => x.PermaLink).NotEmpty ();
             RuleFor (x => x.CreatedBy).NotEmpty ();
             RuleFor (x => x.Abstract).NotEmpty ();
