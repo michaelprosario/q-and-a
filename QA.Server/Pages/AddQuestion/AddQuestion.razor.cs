@@ -14,21 +14,19 @@ namespace QA.Server
     public partial class AddQuestionComponentBase : ComponentBase
     {
         private string markdownHtml = "";
-        public Question Record;
-        public IList<ValidationFailure> ValidationFailures = new List<ValidationFailure>();
-        [Inject] private IDocumentsService<Question> DocumentsService { get; set; }
-        [Inject] NavigationManager NavigationManager { get; set; }
 
+        [Inject] NavigationManager NavigationManager { get; set; }
+        [Inject] private IDocumentsService<Question> DocumentsService { get; set; }
+        public IList<ValidationFailure> ValidationFailures = new List<ValidationFailure>();
+        public Question Record{ get; set; }
         public string FormMessage { get; set; } = "";
         
         private void OnNewRecord()
-        {
-            // change goes here ...
+        {            
             Record = new Question
             {
                 Id = Guid.NewGuid().ToString()
-            };
-            FormMessage = "Create Question";
+            };            
         }
 
         private async Task OnSave()
@@ -70,11 +68,6 @@ namespace QA.Server
             return Task.CompletedTask;
         }
         
-        private void OnSaveAndClose()
-        {
-            NavigationManager.NavigateTo($"view-question/{Record.Id}");
-        }
-
         protected override async Task OnInitializedAsync()
         {
             OnNewRecord();
