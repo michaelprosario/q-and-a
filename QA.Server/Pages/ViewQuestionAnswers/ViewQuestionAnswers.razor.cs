@@ -27,7 +27,7 @@ namespace QA.Server
             query.UserId = "system";
             var queryResponse = await queryService.GetQuestionAndAnswers(query);
 
-            if(!queryResponse.Ok())
+            if(queryResponse.Ok())
             {
                 Question = queryResponse.Question;
                 Answers = queryResponse.Answers;

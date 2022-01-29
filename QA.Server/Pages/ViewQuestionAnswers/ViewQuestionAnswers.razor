@@ -1,18 +1,20 @@
 @page "/view-question/{id}"
 @inherits ViewQuestionAnswersComponentBase
 
-<PageTitle>Question</PageTitle>
-
-<ViewQuestion />
+@if (Question != null)
+{
+<PageTitle>@Question.Name</PageTitle>
+<ViewQuestion Question="Question" />
 
 <div class="container">
     <div class="row">
-        <div class="col">
-            <h1>7 Answers</h1>
-        </div>
+    <div class="col"><h1>@Answers.Count Answers</h1></div>
     </div>
 </div>
 
-<ViewAnswer />
-<ViewAnswer />
-<ViewAnswer />
+@foreach(var answer in Answers)
+{
+    <ViewAnswer />
+}
+
+}
