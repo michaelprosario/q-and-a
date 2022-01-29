@@ -18,3 +18,10 @@
 }
 
 }
+
+<hr>
+<h1>Share Your Answer</h1>
+
+<MarkdownEditor @bind-Value="@AnswerContent" 
+                ValueHTMLChanged="@OnMarkdownValueHTMLChanged" />
+<HxButton OnClick="OnSaveAnswer" Color="ThemeColor.Primary">Save Answer</HxButton>

@@ -16,8 +16,9 @@ namespace QA.Server
         public IList<ValidationFailure> ValidationFailures = new List<ValidationFailure>();
         [Inject] private IQAQueryService queryService { get; set; }
         [Inject] NavigationManager NavigationManager { get; set; }
-
-        public string FormMessage { get; set; } = "";
+        
+        public string MarkdownHtml { get; set; } = "";
+        public string AnswerContent { get; set; } = "";
         [ParameterAttribute]public string Id { get; set; } = "";
         
         protected override async Task OnInitializedAsync()
@@ -33,5 +34,27 @@ namespace QA.Server
                 Answers = queryResponse.Answers;
             }
         }
+
+        protected Task OnMarkdownValueHTMLChanged(string value)
+        {
+            MarkdownHtml = value;
+            return Task.CompletedTask;
+        }   
+
+        protected void OnSaveAnswer() {
+            // populate answer ...
+
+            // setup storage service ...
+
+            // store answer 
+
+            // check if response is ok
+
+
+            // Ok? Refresh page
+
+            // Not ok? Display answer validation errors
+
+        }     
     }
 }
