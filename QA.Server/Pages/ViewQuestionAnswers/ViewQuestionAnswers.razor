@@ -1,18 +1,34 @@
 @page "/view-question/{id}"
 @inherits ViewQuestionAnswersComponentBase
 
-<PageTitle>Question</PageTitle>
-
-<ViewQuestion />
+@if (Question != null)
+{
+<PageTitle>@Question.Name</PageTitle>
+<ViewQuestion Question="Question" />
 
 <div class="container">
     <div class="row">
-        <div class="col">
-            <h1>7 Answers</h1>
-        </div>
+    <div class="col"><h1>@Answers.Count Answers</h1></div>
     </div>
 </div>
 
-<ViewAnswer />
-<ViewAnswer />
-<ViewAnswer />
+@foreach(var answer in Answers){ <ViewAnswer Answer="answer" /> }
+
+}
+
+<hr>
+<h1>Share Your Answer</h1>
+
+<MarkdownEditor @bind-Value="@AnswerContent" 
+                ValueHTMLChanged="@OnMarkdownValueHTMLChanged" />
+
+@if (ValidationFailures.Count > 0)
+{
+    <ul>
+        @foreach (var validationFailure in ValidationFailures)
+        {
+            <li>@validationFailure</li>
+        }
+    </ul>
+}
+<HxButton OnClick="OnSaveAnswerAsync" Color="ThemeColor.Primary">Save Answer</HxButton>

@@ -35,7 +35,7 @@ builder.Services.AddScoped(typeof(IQAQueryRepository), typeof(QAQueryRepository)
 
 // core services ...
 builder.Services.AddScoped(typeof(IDocumentsService<>), typeof(DocumentsService<>));
-
+builder.Services.AddScoped(typeof(IQAQueryService), typeof(QAQueryService));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -1,8 +1,10 @@
+@inherits ViewQuestionComponentBase
+
 <!-- START Question container -->
 <div class="container">
     <div class="row">
         <div class="col-10">
-            <h1>Open source projects using BDD testing?</h1>
+            <h1>@Question.Name</h1>
         </div>
         <div class="col-2">
             <HxButton Text="Ask Question" Color="ThemeColor.Primary" />
@@ -10,7 +12,7 @@
     </div>
     <div class="row">
         <div class="col-10">
-            Created at 5/19/2007 - Viewed 1234 times
+            Created at @Question.CreatedAt - Viewed @Question.Views times
         </div>
         <div class="col-2">
             &nbsp;
@@ -19,16 +21,12 @@
     <hr>
     <div class="row">
         <div class="col-1" style="text-align: center">
-            <h1>3</h1>
+            <h1>@Question.Votes </h1>
         </div>
         <div class="col-10">
-            <p>My team is interesting in understanding BDD better.</p>
-            <p>Are there open source .NET/Java projects which use behavior driven development (BDD)?</p>
-            <p>I would like to focus my attention on static language examples.</p>
+            @((MarkupString)Question.HtmlContent)
             <p>
-                <a href="">#Tag1</a> &nbsp;
-                <a href="">#Tag2</a> &nbsp;
-                <a href="">#Tag3</a>
+                @Question.Tags
             </p>
         </div>
     </div>
@@ -42,9 +40,10 @@
             </p>
         </div>
         <div class="col-2 divQuestionAuthor" >
-            Asked by <b>Mrosario</b><br>
+            Asked by <b>@Question.CreatedBy</b><br>
             842
         </div>
     </div>
 </div>
 <!-- end QUESTION container -->
+
