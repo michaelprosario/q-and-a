@@ -12,7 +12,7 @@ namespace QA.Server
     public partial class ViewAnswerComponentBase : ComponentBase
     {
         [Parameter]
-        public List<QuestionAnswer> Answers { get; set; } = new List<QuestionAnswer>();
+        public QuestionAnswer Answer { get; set; }
         [Inject] NavigationManager NavigationManager { get; set; }
         
         protected override async Task OnInitializedAsync()

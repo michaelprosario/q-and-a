@@ -12,10 +12,7 @@
     </div>
 </div>
 
-@foreach(var answer in Answers)
-{
-    <ViewAnswer />
-}
+@foreach(var answer in Answers){ <ViewAnswer Answer="answer" /> }
 
 }
 
@@ -24,4 +21,14 @@
 
 <MarkdownEditor @bind-Value="@AnswerContent" 
                 ValueHTMLChanged="@OnMarkdownValueHTMLChanged" />
-<HxButton OnClick="OnSaveAnswer" Color="ThemeColor.Primary">Save Answer</HxButton>
+
+@if (ValidationFailures.Count > 0)
+{
+    <ul>
+        @foreach (var validationFailure in ValidationFailures)
+        {
+            <li>@validationFailure</li>
+        }
+    </ul>
+}
+<HxButton OnClick="OnSaveAnswerAsync" Color="ThemeColor.Primary">Save Answer</HxButton>

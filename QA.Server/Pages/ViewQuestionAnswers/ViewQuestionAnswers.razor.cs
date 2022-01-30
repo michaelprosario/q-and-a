@@ -1,4 +1,5 @@
 using DocumentStore.Core.Requests;
+using DocumentStore.Core.Services.DocumentStore.Core.Services;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Components;
 using QA.Core.Entities;
@@ -16,11 +17,12 @@ namespace QA.Server
         public IList<ValidationFailure> ValidationFailures = new List<ValidationFailure>();
         [Inject] private IQAQueryService queryService { get; set; }
         [Inject] NavigationManager NavigationManager { get; set; }
+        [Inject] private IDocumentsService<QuestionAnswer> answerDocumentsService { get; set; }
         
         public string MarkdownHtml { get; set; } = "";
         public string AnswerContent { get; set; } = "";
         [ParameterAttribute]public string Id { get; set; } = "";
-        
+               
         protected override async Task OnInitializedAsync()
         {
             GetDocumentQuery query = new GetDocumentQuery();
@@ -41,20 +43,39 @@ namespace QA.Server
             return Task.CompletedTask;
         }   
 
-        protected void OnSaveAnswer() {
-            // populate answer ...
+        protected async Task OnSaveAnswerAsync()
+        {
+            QuestionAnswer questionAnswer = makeAnswer();
+            var command = new StoreDocumentCommand<QuestionAnswer>
+            {
+                UserId = "system",
+                Document = questionAnswer
+            };
+            var storeResponse = await answerDocumentsService.StoreDocument(command);
 
-            // setup storage service ...
+            if (!storeResponse.Ok())
+            {
+                ValidationFailures = storeResponse.ValidationErrors;
+            }
+            else
+            {
+                NavigationManager.NavigateTo($"view-question/{Id}", true);
+            }
+        }
 
-            // store answer 
-
-            // check if response is ok
-
-
-            // Ok? Refresh page
-
-            // Not ok? Display answer validation errors
-
-        }     
+        private QuestionAnswer makeAnswer()
+        {
+            var questionAnswer = new QuestionAnswer();
+            questionAnswer.Name = "n/a";
+            questionAnswer.Content = AnswerContent;
+            questionAnswer.HtmlContent = MarkdownHtml;
+            questionAnswer.Tags = "n/a";
+            questionAnswer.PermaLink = "n/a";
+            questionAnswer.CreatedBy = "system";
+            questionAnswer.Id = Guid.NewGuid().ToString();
+            questionAnswer.Abstract = questionAnswer.HtmlContent;
+            questionAnswer.QuestionId = Id;
+            return questionAnswer;
+        }
     }
 }
