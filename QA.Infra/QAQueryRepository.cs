@@ -20,7 +20,7 @@ namespace QA.Infra
         public List<QuestionAnswer> GetAnswersForQuestion(string questionId)
         {
             Require.NotNullOrEmpty(questionId, "query is required");
-            var answers = dbContext.QuestionAnswers.Where(r => r.QuestionId == questionId).ToList();
+            var answers = dbContext.QuestionAnswers.Where(r => r.QuestionId == questionId).OrderByDescending(r => r.Votes).ToList();
             if (answers == null)
             {
                 throw new ApplicationException("answers returned null");

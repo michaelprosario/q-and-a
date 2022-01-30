@@ -12,7 +12,7 @@
     </div>
 </div>
 
-@foreach(var answer in Answers){ <ViewAnswer Answer="answer" /> }
+@foreach(var answer in Answers){ <ViewAnswer Answer="answer" OnUpVote="OnAnswerUpVote" /> }
 
 }
 

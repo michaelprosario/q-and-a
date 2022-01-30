@@ -1,4 +1,5 @@
 using DocumentStore.Core.Requests;
+using DocumentStore.Core.Responses;
 using DocumentStore.Core.Services.DocumentStore.Core.Services;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Components;
@@ -46,12 +47,7 @@ namespace QA.Server
         protected async Task OnSaveAnswerAsync()
         {
             QuestionAnswer questionAnswer = makeAnswer();
-            var command = new StoreDocumentCommand<QuestionAnswer>
-            {
-                UserId = "system",
-                Document = questionAnswer
-            };
-            var storeResponse = await answerDocumentsService.StoreDocument(command);
+            StoreDocumentResponse<QuestionAnswer> storeResponse = await saveAnswer(questionAnswer);
 
             if (!storeResponse.Ok())
             {
@@ -61,6 +57,17 @@ namespace QA.Server
             {
                 NavigationManager.NavigateTo($"view-question/{Id}", true);
             }
+        }
+
+        private async Task<StoreDocumentResponse<QuestionAnswer>> saveAnswer(QuestionAnswer questionAnswer)
+        {
+            var command = new StoreDocumentCommand<QuestionAnswer>
+            {
+                UserId = "system",
+                Document = questionAnswer
+            };
+            var storeResponse = await answerDocumentsService.StoreDocument(command);
+            return storeResponse;
         }
 
         private QuestionAnswer makeAnswer()
@@ -76,6 +83,16 @@ namespace QA.Server
             questionAnswer.Abstract = questionAnswer.HtmlContent;
             questionAnswer.QuestionId = Id;
             return questionAnswer;
+        }
+
+        protected async Task OnAnswerUpVote(QuestionAnswer answer) {
+            answer.Votes += 1;
+            StoreDocumentResponse<QuestionAnswer> storeResponse = await saveAnswer(answer);
+
+            if (!storeResponse.Ok())
+            {
+                throw new ApplicationException("Error while up vote of answer");
+            }
         }
     }
 }
