@@ -29,6 +29,18 @@ namespace QA.Infra
             return answers;
         }
 
+        public bool UserVotedForEntity(string userId, string entityType, string entityId){
+            Require.NotNullOrEmpty(userId, "userId is required");
+            Require.NotNullOrEmpty(entityType, "entityType is required");
+            Require.NotNullOrEmpty(entityId, "entityId is required");
+
+            return dbContext.EntityVotes.Any(
+                r => r.CreatedBy == userId && 
+                r.ParentEntityType == entityType && 
+                r.ParentEntityId == entityId 
+                );      
+        }
+
         public GetQuestionsResponse GetQuestions(GetQuestionsQuery query)
         {
             Require.ObjectNotNull(query, "query is required");

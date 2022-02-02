@@ -12,7 +12,7 @@ using QA.Infra;
 namespace QA.Infra.Migrations
 {
     [DbContext(typeof(QAContext))]
-    [Migration("20220128123224_setup1")]
+    [Migration("20220202022713_setup1")]
     partial class setup1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -101,7 +101,7 @@ namespace QA.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EntityView");
+                    b.ToTable("EntityViews");
                 });
 
             modelBuilder.Entity("QA.Core.Entities.EntityVote", b =>
@@ -138,7 +138,7 @@ namespace QA.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EntityVote");
+                    b.ToTable("EntityVotes");
                 });
 
             modelBuilder.Entity("QA.Core.Entities.Question", b =>

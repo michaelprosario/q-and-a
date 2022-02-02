@@ -22,7 +22,7 @@ CREATE TABLE "Comments" (
     CONSTRAINT "PK_Comments" PRIMARY KEY ("Id")
 );
 
-CREATE TABLE "EntityView" (
+CREATE TABLE "EntityViews" (
     "Id" text NOT NULL,
     "CreatedAt" timestamp with time zone NOT NULL,
     "CreatedBy" text NULL,
@@ -33,10 +33,10 @@ CREATE TABLE "EntityView" (
     "IsDeleted" boolean NOT NULL,
     "UpdatedAt" timestamp with time zone NULL,
     "UpdatedBy" text NULL,
-    CONSTRAINT "PK_EntityView" PRIMARY KEY ("Id")
+    CONSTRAINT "PK_EntityViews" PRIMARY KEY ("Id")
 );
 
-CREATE TABLE "EntityVote" (
+CREATE TABLE "EntityVotes" (
     "Id" text NOT NULL,
     "CreatedAt" timestamp with time zone NOT NULL,
     "CreatedBy" text NULL,
@@ -47,7 +47,7 @@ CREATE TABLE "EntityVote" (
     "IsDeleted" boolean NOT NULL,
     "UpdatedAt" timestamp with time zone NULL,
     "UpdatedBy" text NULL,
-    CONSTRAINT "PK_EntityVote" PRIMARY KEY ("Id")
+    CONSTRAINT "PK_EntityVotes" PRIMARY KEY ("Id")
 );
 
 CREATE TABLE "QuestionAnswers" (
@@ -96,7 +96,7 @@ CREATE TABLE "Questions" (
 );
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20220128123224_setup1', '6.0.1');
+VALUES ('20220202022713_setup1', '6.0.1');
 
 COMMIT;
 

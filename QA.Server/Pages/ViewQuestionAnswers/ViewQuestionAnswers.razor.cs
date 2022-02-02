@@ -13,22 +13,24 @@ namespace QA.Server
 {
     public partial class ViewQuestionAnswersComponentBase : ComponentBase
     {
-        public Question Question { get; set; }
-        public List<QuestionAnswer> Answers { get; set; } = new List<QuestionAnswer>();
         public IList<ValidationFailure> ValidationFailures = new List<ValidationFailure>();
-        [Inject] private IQAQueryService queryService { get; set; }
-        [Inject] NavigationManager NavigationManager { get; set; }
-        [Inject] private IDocumentsService<QuestionAnswer> answerDocumentsService { get; set; }
-        
-        public string MarkdownHtml { get; set; } = "";
+        public List<QuestionAnswer> Answers { get; set; } = new List<QuestionAnswer>();
+        public Question Question { get; set; }
         public string AnswerContent { get; set; } = "";
+        public string MarkdownHtml { get; set; } = "";
+
+        [Inject] NavigationManager NavigationManager { get; set; }
+        [Inject] private IDocumentsService<EntityVote> votesDocumentsService { get; set; }
+        [Inject] private IDocumentsService<QuestionAnswer> answerDocumentsService { get; set; }
+        [Inject] private IQAQueryService queryService { get; set; }
+        
         [ParameterAttribute]public string Id { get; set; } = "";
                
         protected override async Task OnInitializedAsync()
         {
-            GetDocumentQuery query = new GetDocumentQuery();
+            var query = new GetDocumentQuery();
             query.Id = Id;
-            query.UserId = "system";
+            query.UserId = getCurrentUser();
             var queryResponse = await queryService.GetQuestionAndAnswers(query);
 
             if(queryResponse.Ok())
@@ -36,6 +38,10 @@ namespace QA.Server
                 Question = queryResponse.Question;
                 Answers = queryResponse.Answers;
             }
+        }
+
+        string getCurrentUser(){
+            return "system";
         }
 
         protected Task OnMarkdownValueHTMLChanged(string value)
@@ -63,12 +69,21 @@ namespace QA.Server
         {
             var command = new StoreDocumentCommand<QuestionAnswer>
             {
-                UserId = "system",
+                UserId = getCurrentUser(),
                 Document = questionAnswer
             };
-            var storeResponse = await answerDocumentsService.StoreDocument(command);
-            return storeResponse;
+            return await answerDocumentsService.StoreDocument(command);
         }
+
+        private async Task<StoreDocumentResponse<EntityVote>> saveVote(EntityVote vote)
+        {
+            var command = new StoreDocumentCommand<EntityVote>
+            {
+                UserId = getCurrentUser(),
+                Document = vote
+            };
+            return await votesDocumentsService.StoreDocument(command);
+        }        
 
         private QuestionAnswer makeAnswer()
         {
@@ -78,7 +93,7 @@ namespace QA.Server
             questionAnswer.HtmlContent = MarkdownHtml;
             questionAnswer.Tags = "n/a";
             questionAnswer.PermaLink = "n/a";
-            questionAnswer.CreatedBy = "system";
+            questionAnswer.CreatedBy = getCurrentUser();
             questionAnswer.Id = Guid.NewGuid().ToString();
             questionAnswer.Abstract = questionAnswer.HtmlContent;
             questionAnswer.QuestionId = Id;
@@ -86,6 +101,10 @@ namespace QA.Server
         }
 
         protected async Task OnAnswerUpVote(QuestionAnswer answer) {
+            bool voteExists = queryService.UserVotedForEntity(getCurrentUser(), "answer", answer.Id);
+            if(voteExists)
+                return;
+
             answer.Votes += 1;
             StoreDocumentResponse<QuestionAnswer> storeResponse = await saveAnswer(answer);
 
@@ -93,6 +112,19 @@ namespace QA.Server
             {
                 throw new ApplicationException("Error while up vote of answer");
             }
+
+            // Log that the current user has voted for this answer.
+            var vote = new EntityVote();
+            vote.CreatedBy = getCurrentUser();
+            vote.Id = Guid.NewGuid().ToString();
+            vote.ParentEntityType = "answer";
+            vote.ParentEntityId = answer.Id;
+            StoreDocumentResponse<EntityVote> saveVoteResponse = await saveVote(vote);
+            if (!saveVoteResponse.Ok())
+            {
+                throw new ApplicationException("Error while save of vote");
+            }
+
         }
     }
 }
