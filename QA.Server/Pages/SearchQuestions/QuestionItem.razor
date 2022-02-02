@@ -1,7 +1,9 @@
+@inherits QuestionItemComponentBase
+
 <div class="container">
   <div class="row">
     <div class="col-2" style="text-align:center;">
-      <h1>96</h1>
+      <h1>@Question.Views</h1>
       views
       <div class="divAnswerCounts">
         <h1>4</h1>
@@ -10,13 +12,10 @@
 
     </div>
     <div class="col-10">
-      <a href="javascript:alert('fix me');"><h1>What are the top ways to ask questions?</h1></a>
-      <p>fdafda fdfa fdsafdaf fdsafd fdsafda fdafda fdfa fdsafdaf fdsafd fdsafda fdafda fdfa fdsafdaf fdsafd fdsafda fdafda fdfa fdsafdaf fdsafd fdsafda fdafda fdfa fdsafdaf fdsafd fdsafda fdafda fdfa fdsafdaf fdsafd fdsafda fdafda fdfa fdsafdaf fdsafd fdsafda fdafda fdfa fdsafdaf fdsafd fdsafda fdafda fdfa fdsafdaf fdsafd fdsafda fdafda fdfa fdsafdaf fdsafd fdsafda fdafda fdfa fdsafdaf fdsafd fdsafda fdafda fdfa fdsafdaf fdsafd fdsafda </p>
-        <p>
-            <a href="">#Tag1</a> &nbsp;
-            <a href="">#Tag2</a> &nbsp;
-            <a href="">#Tag3</a>
-        </p>
+      <a href="javascript:alert('fix me');"><h1>@Question.Name</h1></a>
+      @((MarkupString)Question.Content)
+      @Question.Tags
+      </p>
     </div>
   </div>
 </div>
