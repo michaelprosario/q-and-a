@@ -44,7 +44,13 @@ namespace QA.Infra
         public GetQuestionsResponse GetQuestions(GetQuestionsQuery query)
         {
             Require.ObjectNotNull(query, "query is required");
-            var questions = dbContext.Questions.Where(r => r.Name.Contains(query.Keyword) || r.Content.Contains(query.Keyword)).ToList();
+            var recordSet = dbContext.Questions.AsQueryable();
+            
+            if(query.Keyword != null && query.Keyword.Length > 0)
+            {
+                recordSet = recordSet.Where(r => r.Name.Contains(query.Keyword) || r.Content.Contains(query.Keyword));
+            }
+            var questions = recordSet.ToList();
             if(questions == null)
             {
                 throw new ApplicationException("questions returned null");
