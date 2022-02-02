@@ -35,6 +35,10 @@ namespace QA.Server
 
         string getCurrentUser(){
             return "system";
-        }     
+        }    
+
+        protected void OnAskQuestion(){
+            NavigationManager.NavigateTo($"add-question", true);
+        }
     }
 }
