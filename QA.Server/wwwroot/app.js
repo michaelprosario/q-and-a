@@ -20,3 +20,13 @@ function getMarkDownEditHtmlContent(divTextArea){
     console.log(html);
     return html;
 }
+
+function navigateToAddQuestion()
+{
+    window.location = "/add-question";
+}
+
+function navigateToSearchQuestions()
+{
+    window.location = "/search-questions";
+}
