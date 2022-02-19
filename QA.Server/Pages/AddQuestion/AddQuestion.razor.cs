@@ -35,8 +35,8 @@ namespace QA.Server
 
             Record.CreatedBy = "system";
             Record.PermaLink = Record.Name;
-            Record.Abstract = markdownHtml;
-            Record.HtmlContent = markdownHtml;
+            Record.Abstract = Record.Content;
+            Record.HtmlContent = Record.Content;
 
             var questionValidator = new QuestionValidator();
             var validationResults = questionValidator.Validate(this.Record);

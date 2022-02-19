@@ -17,10 +17,8 @@
 }
 
 <hr>
-<h1>Share Your Answer</h1>
 
-<MarkdownEditor @bind-Value="@AnswerContent" 
-                ValueHTMLChanged="@OnMarkdownValueHTMLChanged" />
+<textarea id="txtRecordContent" @bind="AnswerContent"></textarea>
 
 @if (ValidationFailures.Count > 0)
 {

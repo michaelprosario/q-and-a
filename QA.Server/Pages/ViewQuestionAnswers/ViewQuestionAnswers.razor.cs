@@ -90,7 +90,7 @@ namespace QA.Server
             var questionAnswer = new QuestionAnswer();
             questionAnswer.Name = "n/a";
             questionAnswer.Content = AnswerContent;
-            questionAnswer.HtmlContent = MarkdownHtml;
+            questionAnswer.HtmlContent = AnswerContent;
             questionAnswer.Tags = "n/a";
             questionAnswer.PermaLink = "n/a";
             questionAnswer.CreatedBy = getCurrentUser();
