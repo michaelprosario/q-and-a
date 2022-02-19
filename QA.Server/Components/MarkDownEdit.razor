@@ -1,0 +1,26 @@
+@inject IJSRuntime JS
+
+<textarea id="txtMarkDownEdit"></textarea>
+
+@code
+{
+    public async Task  SetContent(string value)
+    {
+        await JS.InvokeVoidAsync("setMarkDownEditContent", value);
+    }
+
+    public async Task<string> GetContent()
+    {
+        var interopResult = 
+        await JS.InvokeAsync<string>("getMarkDownEditContent");
+        return interopResult;
+    }
+    
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("setupMarkDownEdit", "txtMarkDownEdit");
+        }
+    }  
+}

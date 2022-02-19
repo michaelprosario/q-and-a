@@ -20,6 +20,7 @@ namespace QA.Server
         public IList<ValidationFailure> ValidationFailures = new List<ValidationFailure>();
         public Question Record{ get; set; }
         public string FormMessage { get; set; } = "";
+        protected QA.Server.Components.MarkDownEdit markDownEdit;  
         
         private void OnNewRecord()
         {            
@@ -35,8 +36,10 @@ namespace QA.Server
 
             Record.CreatedBy = "system";
             Record.PermaLink = Record.Name;
-            Record.Abstract = Record.Content;
-            Record.HtmlContent = Record.Content;
+            Record.Abstract = await markDownEdit.GetContent();
+            Record.HtmlContent = await markDownEdit.GetContent();
+            Record.Content = await markDownEdit.GetContent();
+            Console.WriteLine(Record.HtmlContent);
 
             var questionValidator = new QuestionValidator();
             var validationResults = questionValidator.Validate(this.Record);
@@ -60,12 +63,6 @@ namespace QA.Server
             {
                 NavigationManager.NavigateTo($"view-question/{Record.Id}", true);
             }
-        }
-
-        protected Task OnMarkdownValueHTMLChanged(string value)
-        {
-            markdownHtml = value;
-            return Task.CompletedTask;
         }
         
         protected override async Task OnInitializedAsync()
