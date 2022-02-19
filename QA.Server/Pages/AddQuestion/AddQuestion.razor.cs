@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Markdig;
 
 namespace QA.Server
 {
@@ -36,9 +37,11 @@ namespace QA.Server
 
             Record.CreatedBy = "system";
             Record.PermaLink = Record.Name;
-            Record.Abstract = await markDownEdit.GetContent();
-            Record.HtmlContent = await markDownEdit.GetContent();
-            Record.Content = await markDownEdit.GetContent();
+            string content = await markDownEdit.GetContent();
+            var html = Markdown.ToHtml(content);
+            Record.Abstract = content;
+            Record.HtmlContent = html;
+            Record.Content = content;
             Console.WriteLine(Record.HtmlContent);
 
             var questionValidator = new QuestionValidator();

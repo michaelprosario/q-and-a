@@ -11,7 +11,12 @@ function _setupMarkDownEdit(divTextArea){
 }
 
 function getMarkDownEditContent(divTextArea){
-    console.log("mark down editor value");
-    console.log(simplemde.value());
     return simplemde.value();
+}
+
+function getMarkDownEditHtmlContent(divTextArea){
+    console.log("mark down editor value");
+    var html = simplemde.previewRender();
+    console.log(html);
+    return html;
 }

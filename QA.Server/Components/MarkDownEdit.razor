@@ -15,6 +15,13 @@
         await JS.InvokeAsync<string>("getMarkDownEditContent");
         return interopResult;
     }
+
+    public async Task<string> GetHtmlContent()
+    {
+        var interopResult = 
+        await JS.InvokeAsync<string>("getMarkDownEditHtmlContent");
+        return interopResult;
+    }
     
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
