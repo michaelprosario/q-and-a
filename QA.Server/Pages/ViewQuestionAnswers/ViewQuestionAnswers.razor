@@ -18,7 +18,8 @@
 
 <hr>
 
-<textarea id="txtRecordContent" @bind="AnswerContent"></textarea>
+<MarkDownEdit @ref="markDownEdit" />
+
 
 @if (ValidationFailures.Count > 0)
 {

@@ -1,4 +1,5 @@
 @inject IJSRuntime JS
+@using Markdig
 
 <textarea id="txtMarkDownEdit"></textarea>
 
@@ -18,9 +19,9 @@
 
     public async Task<string> GetHtmlContent()
     {
-        var interopResult = 
-        await JS.InvokeAsync<string>("getMarkDownEditHtmlContent");
-        return interopResult;
+        string content = await GetContent();
+        string html = Markdown.ToHtml(content);
+        return html;
     }
     
     protected override async Task OnAfterRenderAsync(bool firstRender)
