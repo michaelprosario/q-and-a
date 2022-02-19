@@ -18,5 +18,9 @@ namespace QA.Server
         protected override async Task OnInitializedAsync()
         {
         }
+
+        protected void OnAskQuestion(){
+            NavigationManager.NavigateTo($"add-question", true);
+        }        
     }
 }

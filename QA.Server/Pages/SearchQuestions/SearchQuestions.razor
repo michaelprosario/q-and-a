@@ -1,6 +1,10 @@
-@page "/questions"
+@page "/search-questions"
+@inherits SearchQuestionsComponentBase
 
-<HxInputText @bind-Value="@searchText" Placeholder="Enter search"/>
+@if(Questions != null)
+{
+
+<HxInputText @bind-Value="@SearchTerms" Placeholder="Enter search"/>
 <br><br>
 <div class="container">
   <div class="row">
@@ -8,7 +12,7 @@
       <h1>Search Results</h1>
     </div>
     <div class="col-2">
-      <HxButton Text="Ask Question" Color="ThemeColor.Primary" />
+      <HxButton Text="Ask Question" Color="ThemeColor.Primary" OnClick="OnAskQuestion" />
     </div>
   </div>
 </div>
@@ -16,7 +20,7 @@
 <div class="container">
   <div class="row">
     <div class="col-10">
-      <h3>34234 results</h3>
+      <h3>@Questions.Count results</h3>
     </div>
     <div class="col-2">&nbsp;
     </div>
@@ -25,13 +29,12 @@
 
 <hr>
 
-<QuestionItem />
-<QuestionItem />
-<QuestionItem />
-<QuestionItem />
-<QuestionItem />
+@foreach(var question in Questions)
+{
+  <QuestionItem Question="question" />
+}
+
 <HxPager CurrentPageIndex="0" TotalPages="6" />
 
-@code{
-    public string searchText = "";
+
 }

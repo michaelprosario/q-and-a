@@ -26,3 +26,9 @@ docker build -f QA.Server/Dockerfile -t qa-app:latest .
 
 References:
 - https://code-maze.com/angular-security-with-asp-net-core-identity/
+
+
+
+
+Links
+- https://github.com/sparksuite/simplemde-markdown-editor

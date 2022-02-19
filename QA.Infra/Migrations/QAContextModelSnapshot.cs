@@ -99,7 +99,7 @@ namespace QA.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EntityView");
+                    b.ToTable("EntityViews");
                 });
 
             modelBuilder.Entity("QA.Core.Entities.EntityVote", b =>
@@ -136,7 +136,7 @@ namespace QA.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EntityVote");
+                    b.ToTable("EntityVotes");
                 });
 
             modelBuilder.Entity("QA.Core.Entities.Question", b =>

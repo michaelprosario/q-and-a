@@ -32,7 +32,7 @@ namespace QA.Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EntityView",
+                name: "EntityViews",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
@@ -48,11 +48,11 @@ namespace QA.Infra.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EntityView", x => x.Id);
+                    table.PrimaryKey("PK_EntityViews", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "EntityVote",
+                name: "EntityVotes",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
@@ -68,7 +68,7 @@ namespace QA.Infra.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EntityVote", x => x.Id);
+                    table.PrimaryKey("PK_EntityVotes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -135,10 +135,10 @@ namespace QA.Infra.Migrations
                 name: "Comments");
 
             migrationBuilder.DropTable(
-                name: "EntityView");
+                name: "EntityViews");
 
             migrationBuilder.DropTable(
-                name: "EntityVote");
+                name: "EntityVotes");
 
             migrationBuilder.DropTable(
                 name: "QuestionAnswers");

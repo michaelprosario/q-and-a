@@ -1,0 +1,34 @@
+@inject IJSRuntime JS
+@using Markdig
+
+<textarea id="txtMarkDownEdit"></textarea>
+
+@code
+{
+    public async Task  SetContent(string value)
+    {
+        await JS.InvokeVoidAsync("setMarkDownEditContent", value);
+    }
+
+    public async Task<string> GetContent()
+    {
+        var interopResult = 
+        await JS.InvokeAsync<string>("getMarkDownEditContent");
+        return interopResult;
+    }
+
+    public async Task<string> GetHtmlContent()
+    {
+        string content = await GetContent();
+        string html = Markdown.ToHtml(content);
+        return html;
+    }
+    
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("setupMarkDownEdit", "txtMarkDownEdit");
+        }
+    }  
+}

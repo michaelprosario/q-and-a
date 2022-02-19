@@ -9,23 +9,14 @@ using System.Threading.Tasks;
 
 namespace QA.Server
 {
-    public partial class ViewAnswerComponentBase : ComponentBase
+    public partial class QuestionItemComponentBase : ComponentBase
     {
         [Parameter]
-        public QuestionAnswer Answer { get; set; }
-
-        [Parameter]
-        public EventCallback<QuestionAnswer> OnUpVote { get; set; }
+        public Question Question { get; set; }
         [Inject] NavigationManager NavigationManager { get; set; }
-
         
         protected override async Task OnInitializedAsync()
         {
-        }
-
-        protected async Task OnUpVoteAnswerAsync()
-        {
-            await OnUpVote.InvokeAsync(Answer);
         }
     }
 }

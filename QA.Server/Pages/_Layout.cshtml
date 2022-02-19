@@ -15,11 +15,11 @@
     <link href="adminKit/static/css/app.css" rel="stylesheet">
     <link href="css/site.css" rel="stylesheet" />
     <link rel="canonical" href="https://demo-basic.adminkit.io/" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    <script src="app.js"></script>
 
-    <link href="/_content/PSC.Blazor.Components.MarkdownEditor/css/easymde.min.css" rel="stylesheet" />
 
-    <script src="/_content/PSC.Blazor.Components.MarkdownEditor/js/easymde.min.js"></script>
-    <script src="/_content/PSC.Blazor.Components.MarkdownEditor/js/markdownEditor.js"></script>
 
 	<!-- Default values for additional CSS Variables (+ import Bootstrap Icons) -->
 	<link href="_content/Havit.Blazor.Components.Web.Bootstrap/defaults.css" rel="stylesheet" />
@@ -36,29 +36,18 @@
                 </a>
 
                 <ul class="sidebar-nav">
-                    <li class="sidebar-header">
-                        Pages
-                    </li>
-
                     <li class="sidebar-item active">
-                        <a class="sidebar-link" href="index.html">
-                            <i class="align-middle" data-feather="sliders"></i> <span
-                                class="align-middle">Dashboard</span>
+                        <a class="sidebar-link" onclick="navigateToAddQuestion()">
+                            <i class="align-middle" data-feather="sliders"></i> 
+                            <span class="align-middle">Ask Question</span>
                         </a>
                     </li>
-
-
-
-                    <li class="sidebar-header">
-                        Tools & Components
-                    </li>
-
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="ui-buttons.html">
-                            <i class="align-middle" data-feather="square"></i> <span class="align-middle">Buttons</span>
+                    <li class="sidebar-item active">
+                        <a class="sidebar-link" onclick="navigateToSearchQuestions()">
+                            <i class="align-middle" data-feather="sliders"></i> 
+                            <span class="align-middle">Search questions</span>
                         </a>
                     </li>
-
 
                 </ul>
 

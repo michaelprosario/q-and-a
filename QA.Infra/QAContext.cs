@@ -11,8 +11,8 @@ namespace QA.Infra
         }
 
         public DbSet<Comment> Comments { get; set; }
-        public DbSet<EntityView> EntityView { get; set; }
-        public DbSet<EntityVote> EntityVote { get; set; }
+        public DbSet<EntityView> EntityViews { get; set; }
+        public DbSet<EntityVote> EntityVotes { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<QuestionAnswer> QuestionAnswers { get; set; }
 

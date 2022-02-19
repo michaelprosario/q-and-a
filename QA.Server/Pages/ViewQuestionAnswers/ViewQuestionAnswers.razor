@@ -12,15 +12,14 @@
     </div>
 </div>
 
-@foreach(var answer in Answers){ <ViewAnswer Answer="answer" /> }
+@foreach(var answer in Answers){ <ViewAnswer Answer="answer" OnUpVote="OnAnswerUpVote" /> }
 
 }
 
 <hr>
-<h1>Share Your Answer</h1>
 
-<MarkdownEditor @bind-Value="@AnswerContent" 
-                ValueHTMLChanged="@OnMarkdownValueHTMLChanged" />
+<MarkDownEdit @ref="markDownEdit" />
+
 
 @if (ValidationFailures.Count > 0)
 {

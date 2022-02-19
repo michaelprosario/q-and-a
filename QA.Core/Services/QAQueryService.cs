@@ -15,6 +15,7 @@ namespace QA.Core.Services
     {
         GetQuestionsResponse GetQuestions(GetQuestionsQuery query);
         List<QuestionAnswer> GetAnswersForQuestion(string questionId);
+        bool UserVotedForEntity(string userId, string entityType, string entityId);
     }
 
     [DataContract]
@@ -53,6 +54,7 @@ namespace QA.Core.Services
     public interface IQAQueryService {
         GetQuestionsResponse GetQuestions(GetQuestionsQuery query);
         Task<GetQuestionAndAnswersResponse> GetQuestionAndAnswers(GetDocumentQuery query);
+        bool UserVotedForEntity(string userId, string entityType, string entityId);
     }
 
     public class QAQueryService : IQAQueryService {
@@ -73,6 +75,15 @@ namespace QA.Core.Services
             GetQuestionsResponse response = new GetQuestionsResponse();
             
             return _qaQueryRepository.GetQuestions(query);
+        }
+
+        public bool UserVotedForEntity(string userId, string entityType, string entityId)
+        {
+            Require.NotNullOrEmpty(userId, "userId is required");
+            Require.NotNullOrEmpty(entityType, "entityType is required");
+            Require.NotNullOrEmpty(entityId, "entityId is required");
+
+            return _qaQueryRepository.UserVotedForEntity(userId, entityType, entityId);
         }
 
         public async Task<GetQuestionAndAnswersResponse> GetQuestionAndAnswers(GetDocumentQuery query)
@@ -98,8 +109,7 @@ namespace QA.Core.Services
             response.Question = question;
             response.Answers = answers;
             
-            return response;
-            
+            return response;           
         }        
     }
 }
