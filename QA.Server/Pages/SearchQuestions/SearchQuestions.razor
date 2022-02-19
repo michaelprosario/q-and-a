@@ -1,7 +1,8 @@
 @page "/search-questions"
 @inherits SearchQuestionsComponentBase
 
-@if(Questions != null){
+@if(Questions != null)
+{
 
 <HxInputText @bind-Value="@SearchTerms" Placeholder="Enter search"/>
 <br><br>
@@ -32,6 +33,7 @@
 {
   <QuestionItem Question="question" />
 }
+
 <HxPager CurrentPageIndex="0" TotalPages="6" />
 
 
