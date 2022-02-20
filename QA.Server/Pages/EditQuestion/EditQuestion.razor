@@ -1,0 +1,29 @@
+@page "/edit-question/{id}"
+@inherits EditQuestionComponentBase
+
+<h1>Edit a question</h1>
+
+<br>
+
+<h3>Title</h3>
+<HxInputText @bind-Value="Record.Name" Placeholder="Enter question title" />
+<br>
+
+<h3>Tags</h3>
+<HxInputText @bind-Value="Record.Tags" Placeholder="Enter tags" />
+
+
+<h3>Question Details</h3>
+<MarkDownEdit @ref="markDownEdit" />
+
+<br>
+@if (ValidationFailures.Count > 0)
+{
+    <ul>
+        @foreach (var validationFailure in ValidationFailures)
+        {
+            <li>@validationFailure</li>
+        }
+    </ul>
+}
+<HxButton OnClick="OnSaveQuestion" Color="ThemeColor.Primary">Save Question</HxButton>

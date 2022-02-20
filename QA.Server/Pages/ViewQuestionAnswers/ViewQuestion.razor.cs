@@ -21,6 +21,10 @@ namespace QA.Server
 
         protected void OnAskQuestion(){
             NavigationManager.NavigateTo($"add-question", true);
-        }        
+        }       
+
+        protected void OnQuestionEdit() {
+            NavigationManager.NavigateTo($"edit-question/{Question.Id}", true);
+        } 
     }
 }
