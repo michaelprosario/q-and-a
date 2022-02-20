@@ -27,5 +27,9 @@ namespace QA.Server
         {
             await OnUpVote.InvokeAsync(Answer);
         }
+
+        protected async Task OnEdit(){
+            NavigationManager.NavigateTo($"edit-answer/{Answer.Id}", true);
+        }
     }
 }
