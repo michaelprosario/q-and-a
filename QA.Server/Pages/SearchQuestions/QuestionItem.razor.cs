@@ -18,5 +18,9 @@ namespace QA.Server
         protected override async Task OnInitializedAsync()
         {
         }
+
+        protected void OnItemSelect(Question question){
+            NavigationManager.NavigateTo($"view-question/{question.Id}", true);
+        }
     }
 }
