@@ -18,18 +18,13 @@ namespace QA.Server
         public EventCallback<QuestionAnswer> OnUpVote { get; set; }
         [Inject] NavigationManager NavigationManager { get; set; }
 
-        
-        protected override async Task OnInitializedAsync()
-        {
-        }
-
         protected async Task OnUpVoteAnswerAsync()
         {
             await OnUpVote.InvokeAsync(Answer);
         }
 
         protected async Task OnEdit(){
-            NavigationManager.NavigateTo($"edit-answer/{Answer.Id}", true);
+            await Task.Run(() => NavigationManager.NavigateTo($"edit-answer/{Answer.Id}", true));
         }
     }
 }

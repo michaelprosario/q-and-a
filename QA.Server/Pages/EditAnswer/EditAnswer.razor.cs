@@ -10,23 +10,25 @@ namespace QA.Server
 {
     public partial class EditAnswerComponentBase : ComponentBase
     {
-        private string markdownHtml = "";
-
-        [Inject] NavigationManager? NavigationManager { get; set; }
-        [Inject] private IDocumentsService<QuestionAnswer>? DocumentsService { get; set; }
-        [Inject] private IQAQueryService? queryService { get; set; }
+        
+        [Inject] NavigationManager NavigationManager { get; set; }
+        [Inject] private IDocumentsService<QuestionAnswer> DocumentsService { get; set; }
+        [Inject] private IQAQueryService queryService { get; set; }
 
         public IList<ValidationFailure> ValidationFailures = new List<ValidationFailure>();
         
         [ParameterAttribute]public string Id { get; set; } = "";
         
-        protected QA.Server.Components.MarkDownEdit? markDownEdit;  
+        protected QA.Server.Components.MarkDownEdit markDownEdit;  
 
         public QuestionAnswer Record { get; set; } = new QuestionAnswer();
 
 
         protected async Task OnSaveRecord()
         {
+            if(DocumentsService == null) throw new NullReferenceException("DocumentsService");
+            if(NavigationManager == null) throw new NullReferenceException("NavigationManager");
+
             if(Record == null){
                 throw new ApplicationException("Record is null");
             }
@@ -84,6 +86,8 @@ namespace QA.Server
         
         private async Task OnLoadRecordAsync()
         {            
+            if(queryService == null) throw new NullReferenceException("queryService");
+
             var query = new GetDocumentQuery();
             query.Id = Id;
             query.UserId = getCurrentUser();

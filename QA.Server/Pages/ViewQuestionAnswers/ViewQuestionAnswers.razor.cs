@@ -28,6 +28,8 @@ namespace QA.Server
                
         protected override async Task OnInitializedAsync()
         {
+            if(queryService == null) throw new ArgumentNullException();
+
             var query = new GetDocumentQuery();
             query.Id = Id;
             query.UserId = getCurrentUser();
@@ -98,6 +100,8 @@ namespace QA.Server
         }
 
         protected async Task OnAnswerUpVote(QuestionAnswer answer) {
+            if(queryService == null) throw new ArgumentNullException();
+            
             bool voteExists = queryService.UserVotedForEntity(getCurrentUser(), "answer", answer.Id);
             if(voteExists)
                 return;
