@@ -15,12 +15,12 @@ namespace QA.Server
         public Question Question { get; set; }
         [Inject] NavigationManager NavigationManager { get; set; }
         
-        protected override async Task OnInitializedAsync()
-        {
-        }
-
         protected void OnAskQuestion(){
             NavigationManager.NavigateTo($"add-question", true);
-        }        
+        }       
+
+        protected void OnQuestionEdit() {
+            NavigationManager.NavigateTo($"edit-question/{Question.Id}", true);
+        } 
     }
 }

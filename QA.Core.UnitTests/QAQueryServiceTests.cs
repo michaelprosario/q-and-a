@@ -14,12 +14,14 @@ namespace QA.Core.UnitTests{
     {
         IQAQueryRepository _queryRepo;
         IRepository<Question> _questionsRepo;
+        IRepository<QuestionAnswer> _questionAnswersRepo;
         
 
         [SetUp]
         public void SetupStuff(){
             _queryRepo = Substitute.For<IQAQueryRepository>();
             _questionsRepo = Substitute.For<IRepository<Question>>();
+            _questionAnswersRepo = Substitute.For<IRepository<QuestionAnswer>>();
         }
 
         [Test]
@@ -32,7 +34,7 @@ namespace QA.Core.UnitTests{
             var response2 = new GetQuestionsResponse();
             _queryRepo.GetQuestions(query).Returns(response2);
 
-            var service = new QAQueryService(_queryRepo,_questionsRepo);
+            var service = new QAQueryService(_queryRepo,_questionsRepo, _questionAnswersRepo);
 
             // act
             var response = service.GetQuestions(query);

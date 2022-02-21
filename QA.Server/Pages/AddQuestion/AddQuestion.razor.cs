@@ -14,8 +14,7 @@ namespace QA.Server
 {
     public partial class AddQuestionComponentBase : ComponentBase
     {
-        private string markdownHtml = "";
-
+        
         [Inject] NavigationManager NavigationManager { get; set; }
         [Inject] private IDocumentsService<Question> DocumentsService { get; set; }
         public IList<ValidationFailure> ValidationFailures = new List<ValidationFailure>();
@@ -70,7 +69,7 @@ namespace QA.Server
         
         protected override async Task OnInitializedAsync()
         {
-            OnNewRecord();
+            await Task.Run(() => OnNewRecord());            
         }
 
         protected async Task OnSaveQuestion()

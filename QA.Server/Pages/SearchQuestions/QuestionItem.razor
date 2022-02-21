@@ -12,7 +12,7 @@
 
     </div>
     <div class="col-10">
-      <a href="javascript:alert('fix me');"><h1>@Question.Name</h1></a>
+      <a @onclick="() => OnItemSelect(Question)"><h1>@Question.Name</h1></a>
       @((MarkupString)Question.HtmlContent)
       @Question.Tags
       

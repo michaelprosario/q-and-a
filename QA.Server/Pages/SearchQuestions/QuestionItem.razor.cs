@@ -15,8 +15,8 @@ namespace QA.Server
         public Question Question { get; set; }
         [Inject] NavigationManager NavigationManager { get; set; }
         
-        protected override async Task OnInitializedAsync()
-        {
+        protected void OnItemSelect(Question question){
+            NavigationManager.NavigateTo($"view-question/{question.Id}", true);
         }
     }
 }

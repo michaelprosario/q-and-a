@@ -1,0 +1,20 @@
+@page "/edit-answer/{id}"
+@inherits EditAnswerComponentBase
+
+<h1>Edit answer</h1>
+
+<br>
+
+<MarkDownEdit @ref="markDownEdit" />
+
+<br>
+@if (ValidationFailures.Count > 0)
+{
+    <ul>
+        @foreach (var validationFailure in ValidationFailures)
+        {
+            <li>@validationFailure</li>
+        }
+    </ul>
+}
+<HxButton OnClick="OnSaveRecord" Color="ThemeColor.Primary">Save Record</HxButton>

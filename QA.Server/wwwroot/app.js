@@ -14,11 +14,9 @@ function getMarkDownEditContent(divTextArea){
     return simplemde.value();
 }
 
-function getMarkDownEditHtmlContent(divTextArea){
-    console.log("mark down editor value");
-    var html = simplemde.previewRender();
-    console.log(html);
-    return html;
+function setMarkDownEditContent(strContent){
+    
+    setTimeout(() => simplemde.value(strContent), 2000);    
 }
 
 function navigateToAddQuestion()

@@ -25,7 +25,7 @@ namespace QA.Server
             query.Keyword = SearchTerms;
             query.UserId = getCurrentUser();
 
-            var queryResponse = queryService.GetQuestions(query);
+            var queryResponse = await Task.Run(() => queryService.GetQuestions(query));
 
             if(queryResponse.Ok())
             {

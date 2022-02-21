@@ -55,18 +55,26 @@ namespace QA.Core.Services
         GetQuestionsResponse GetQuestions(GetQuestionsQuery query);
         Task<GetQuestionAndAnswersResponse> GetQuestionAndAnswers(GetDocumentQuery query);
         bool UserVotedForEntity(string userId, string entityType, string entityId);
+        Task<DataResponse<QuestionAnswer>> GetAnswer(GetDocumentQuery query);
     }
 
     public class QAQueryService : IQAQueryService {
 
         IQAQueryRepository _qaQueryRepository;
         IRepository<Question> _questionsRepo;
-        public QAQueryService(IQAQueryRepository qaQueryRepository, IRepository<Question> questionsRepo)
+        IRepository<QuestionAnswer> _answersRepo;
+        public QAQueryService(IQAQueryRepository qaQueryRepository, 
+                              IRepository<Question> questionsRepo,
+                              IRepository<QuestionAnswer> answersRepo
+                              )
         {
             Require.ObjectNotNull(qaQueryRepository, "qaQueryRepository is required");
             Require.ObjectNotNull(questionsRepo, "questionsRepo is required");
+            Require.ObjectNotNull(answersRepo, "answersRepo is required");
+            
             _qaQueryRepository = qaQueryRepository;
             _questionsRepo = questionsRepo;
+            _answersRepo = answersRepo;
         }
 
         public GetQuestionsResponse GetQuestions(GetQuestionsQuery query)
@@ -86,6 +94,23 @@ namespace QA.Core.Services
             return _qaQueryRepository.UserVotedForEntity(userId, entityType, entityId);
         }
 
+        public async Task<DataResponse<QuestionAnswer>> GetAnswer(GetDocumentQuery query)
+        {
+            Require.ObjectNotNull(query, "query is required");
+
+            DataResponse<QuestionAnswer> response = new DataResponse<QuestionAnswer>();
+            var getRecordResponse = await _answersRepo.GetById(query.Id);
+            if( getRecordResponse == null)
+            {
+                response.Code = ResponseCode.NotFound;
+                response.Message = "record not found";
+                return response;
+            }
+
+            response.Data = getRecordResponse;
+            return response;
+        }        
+ 
         public async Task<GetQuestionAndAnswersResponse> GetQuestionAndAnswers(GetDocumentQuery query)
         {
             Require.ObjectNotNull(query, "query is required");
