@@ -4,15 +4,11 @@ using FluentValidation.Results;
 using Microsoft.AspNetCore.Components;
 using QA.Core.Entities;
 using QA.Core.Validators;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 
 namespace QA.Server
 {
-    public partial class AddQuestionComponentBase : ComponentBase
+  public partial class AddQuestionComponentBase : ComponentBase
     {
         
         [Inject] NavigationManager NavigationManager { get; set; }

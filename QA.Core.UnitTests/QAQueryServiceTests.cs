@@ -47,7 +47,7 @@ namespace QA.Core.UnitTests{
         public void QAQueryService__GetQuestionAndAnswer__TestHappyCase()
         {
             // arrange
-            var service = new QAQueryService(_queryRepo, _questionsRepo);
+            var service = new QAQueryService(_queryRepo, _questionsRepo, _questionAnswersRepo);
 
             var query = new DocumentStore.Core.Requests.GetDocumentQuery
             {
